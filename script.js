@@ -13,11 +13,13 @@ if (navbar) {
 // ─── Hamburger Menu ─────────────────────────────────────────
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
+const navbarEl  = document.getElementById('navbar');
 
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('open');
     hamburger.classList.toggle('active', isOpen);
+    if (navbarEl) navbarEl.classList.toggle('menu-open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
@@ -26,9 +28,21 @@ if (hamburger && navLinks) {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       hamburger.classList.remove('active');
+      if (navbarEl) navbarEl.classList.remove('menu-open');
       document.body.style.overflow = '';
     });
   });
+
+  // Also close on CTA click
+  const mobileCta = navLinks.querySelector('.nav-mobile-cta a');
+  if (mobileCta) {
+    mobileCta.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('active');
+      if (navbarEl) navbarEl.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    });
+  }
 }
 
 // ─── Scroll Reveal ──────────────────────────────────────────
